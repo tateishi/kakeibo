@@ -15,3 +15,7 @@ dependencies = [
 dev = [
     "pytest>=9.1.1",
 ]
+
+[project.scripts]
+kakeibo="kakeibo.cli:app"
+kakeibo-web="kakeibo.web:app"
