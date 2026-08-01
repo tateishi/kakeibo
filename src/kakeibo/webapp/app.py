@@ -1,6 +1,6 @@
 import streamlit as st
 
-from kakeibo.services import ledger
+from kakeibo import services
 
 def app():
     title = "Hello World!"
@@ -8,7 +8,7 @@ def app():
 
     st.header(title)
 
-    st.session_state.raw_data = ledger.read()
+    st.session_state.raw_data = services.read_ledger()
 
     st.dataframe(st.session_state.raw_data)
 
