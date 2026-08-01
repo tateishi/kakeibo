@@ -27,7 +27,6 @@ def render_account(title: str, _):
     with col1:
         keyword = st.text_input("キーワード検索")
         if keyword:
-#            accounts = [acc for acc in st.session_state.accounts if keyword in acc]
             accounts = [acc
                         for acc
                         in st.session_state.accounts
