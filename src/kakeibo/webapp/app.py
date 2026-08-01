@@ -25,7 +25,8 @@ def app():
 
     tabdefs = [
         Tabdef(title="全体", render_func=contents.render_all),
-        Tabdef(title="科目ごと", render_func=contents.render_by_account, context={"account": "資産:現金:手元現金"})
+        Tabdef(title="科目ごと", render_func=contents.render_by_account, context={"account": "資産:現金:手元現金"}),
+        Tabdef(title="科目選択", render_func=contents.render_account),
     ]
 
     tabs = st.tabs([t.title for t in tabdefs])

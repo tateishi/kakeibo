@@ -44,3 +44,7 @@ def read() -> pd.DataFrame:
     )
 
     return df
+
+def account_list(df: pd.DataFrame) -> list[str]:
+    account = df["account"].dropna().drop_duplicates().sort_values().to_list()
+    return account
