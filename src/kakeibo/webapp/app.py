@@ -2,8 +2,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, Dict
 
 import streamlit as st
-from kakeibo import services
-from kakeibo.webapp import contents
+from kakeibo.webapp import contents, services
 
 RenderFunc = Callable[[str], None]
 
@@ -16,14 +15,13 @@ class Tabdef:
     context: Kwargs = field(default_factory=dict)
 
     def render(self):
-        print(f"title={self.title}, context={self.context}")
         self.render_func(self.title, self.context)
 
 def app():
     title = "Hello World!"
     st.set_page_config(layout="wide", page_title=title)
 
-    st.session_state.raw_data = services.read_ledger()
+    services.load_data()
 
     tabdefs = [
         Tabdef(title="全体", render_func=contents.render_all),
