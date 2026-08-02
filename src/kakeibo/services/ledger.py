@@ -30,8 +30,9 @@ def read() -> pd.DataFrame:
     # file = Path("~/wks/ledger/ledger_kakei/journal/tadatoshi/cash/wallet.ledger")
     # file = Path("~/wks/ledger/ledger_kakei/journal/kakei/bank/sonybank/sonybank.ledger")
 
-    format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(filename),%(beg_line)\n"
-    names = "date payee account amount commodity filename lineno".split()
+    # format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(filename),%(beg_line)\n"
+    format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(meta('pay_month')),%(meta('shop')),%(meta('school')),%(meta('label')),%(filename),%(beg_line)\n"
+    names = "date payee account amount commodity pay_month shop school label filename lineno".split()
 
     text = format_csv(file, format)
     stream = io.StringIO(text)

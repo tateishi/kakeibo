@@ -38,7 +38,7 @@ def render_account(title: str, _):
         selected = st.selectbox("科目", accounts)
 
     df = st.session_state.raw_data
-    df = df["date payee account amount commodity".split()]
+    df = df["date payee account amount commodity pay_month shop school label".split()]
     df = df[df["account"]==selected]
     df["total"] = df["amount"].cumsum()
     st.dataframe(df)
