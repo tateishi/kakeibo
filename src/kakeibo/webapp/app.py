@@ -1,3 +1,4 @@
+import subprocess
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict
 
@@ -21,7 +22,11 @@ def app():
     title = "Hello World!"
     st.set_page_config(layout="wide", page_title=title)
 
-    services.load_data()
+    try:
+        services.load_data()
+    except subprocess.CalledProcessError as e:
+        st.text(f"return code={e.returncode}, message={e.stderr}")
+        return
 
     tabdefs = [
         Tabdef(title="全体", render_func=contents.render_all),
