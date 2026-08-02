@@ -25,8 +25,9 @@ def format_csv(file: Path | str, format: str) -> str:
     except subprocess.CalledProcessError as e:
         raise e
 
-def read() -> pd.DataFrame:
-    file = Path("~/wks/ledger/ledger_kakei/journal/kakei/main.ledger")
+
+def read(file: Path | str) -> pd.DataFrame:
+    # file = Path("~/wks/ledger/ledger_kakei/journal/kakei/main.ledger")
     # file = Path("~/wks/ledger/ledger_kakei/journal/tadatoshi/cash/wallet.ledger")
     # file = Path("~/wks/ledger/ledger_kakei/journal/kakei/bank/sonybank/sonybank.ledger")
 
@@ -41,10 +42,11 @@ def read() -> pd.DataFrame:
         header=None,
         names=names,
         parse_dates=["date"],
-        converters={"amount": Decimal}
+        converters={"amount": Decimal},
     )
 
     return df
+
 
 def account_list(df: pd.DataFrame) -> list[str]:
     account = df["account"].dropna().drop_duplicates().sort_values().to_list()
