@@ -1,4 +1,3 @@
-import subprocess
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict
 
@@ -9,6 +8,7 @@ RenderFunc = Callable[[str], None]
 
 Kwargs = Dict[str, Any]
 
+
 @dataclass
 class Tabdef:
     title: str
@@ -18,19 +18,18 @@ class Tabdef:
     def render(self):
         self.render_func(self.title, self.context)
 
+
 def app():
     title = "Hello World!"
     st.set_page_config(layout="wide", page_title=title)
 
-    try:
-        services.load_data()
-    except subprocess.CalledProcessError as e:
-        st.text(f"return code={e.returncode}, message={e.stderr}")
-        return
-
     tabdefs = [
         Tabdef(title="全体", render_func=contents.render_all),
-        Tabdef(title="科目ごと", render_func=contents.render_by_account, context={"account": "資産:現金:手元現金"}),
+        Tabdef(
+            title="科目ごと",
+            render_func=contents.render_by_account,
+            context={"account": "資産:現金:手元現金"},
+        ),
         Tabdef(title="科目選択", render_func=contents.render_account),
         Tabdef(title="科目と月の選択", render_func=contents.render_account_paymonth),
     ]
@@ -42,6 +41,5 @@ def app():
             tabdef.render()
 
 
-
-if __name__=="__main__":
+if __name__ == "__main__":
     app()
