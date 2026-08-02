@@ -42,3 +42,37 @@ def render_account(title: str, _):
     df = df[df["account"]==selected]
     df["total"] = df["amount"].cumsum()
     st.dataframe(df)
+
+
+def render_account_paymonth(title: str, _):
+    st.header(title)
+    if "raw_data" not in st.session_state:
+        return
+
+    if "accounts" not in st.session_state:
+        return
+
+    col1, col2 = st.columns(2)
+    with col1:
+        keyword = st.text_input("キーワード検索", key="keyword")
+        if keyword:
+            accounts = [acc
+                        for acc
+                        in st.session_state.accounts
+                        if all(k in acc for k in keyword.split())]
+        else:
+            accounts = st.session_state.accounts
+
+    with col2:
+        selected = st.selectbox("科目", accounts, key="account")
+
+    month = st.date_input("paymonth", key="month")
+    month = month.strftime("%Y-%m")
+
+    df = st.session_state.raw_data
+    df = df["date payee account amount commodity pay_month shop school label".split()]
+    df = df[df["account"]==selected]
+    df = df[df["pay_month"]==month]
+
+    df["total"] = df["amount"].cumsum()
+    st.dataframe(df)
