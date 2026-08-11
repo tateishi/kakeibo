@@ -34,6 +34,7 @@ def app():
         Tabdef(title="科目と月の選択", render_func=contents.render_account_paymonth),
         Tabdef(title="忠利との補正", render_func=contents.render_tadatoshi),
         Tabdef(title="時系列", render_func=contents.render_time_series),
+        Tabdef(title="マネックス円残高", render_func=contents.render_monex_jpy),
     ]
 
     tabs = st.tabs([t.title for t in tabdefs])
