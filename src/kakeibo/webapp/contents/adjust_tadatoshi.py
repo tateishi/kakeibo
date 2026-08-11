@@ -52,10 +52,43 @@ def render(title: str, ctx):
 
     col_kakei, col_tadatoshi = st.columns(2)
 
+    kakei_total = total_value(kakei_df, month)
+    kakei_direction = "忠利から家計" if kakei_total > 0 else "家計から忠利"
+
+    tadatoshi_total = total_value(tadatoshi_df, month)
+    tadatoshi_direction = "忠利から家計" if tadatoshi_total < 0 else "家計から忠利"
+
+    if abs(kakei_total) == abs(tadatoshi_total):
+        bg_color = "#004400"
+    else:
+        bg_color = "#440000"
+
     with col_kakei:
-        st.text(f"kakei={total_value(kakei_df, month)}")
+        st.markdown(f"""
+<div style="
+    background-color:{bg_color};
+    padding:20px;
+    border-radius:12px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+">
+    <h3 style="margin:0;">{kakei_direction}</h3>
+    <p style="font-size:1.4rem; font-weight:600;">補正金額 {abs(kakei_total):,} 円</p>
+</div>
+""", unsafe_allow_html=True)
+
         st.dataframe(kakei_df)
 
     with col_tadatoshi:
-        st.text(f"tadatoshi={total_value(tadatoshi_df, month)}")
+        st.markdown(f"""
+<div style="
+    background-color:{bg_color};
+    padding:20px;
+    border-radius:12px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+">
+    <h3 style="margin:0;">{tadatoshi_direction}</h3>
+    <p style="font-size:1.4rem; font-weight:600;">補正金額 {abs(tadatoshi_total):,} 円</p>
+</div>
+""", unsafe_allow_html=True)
+
         st.dataframe(tadatoshi_df)
