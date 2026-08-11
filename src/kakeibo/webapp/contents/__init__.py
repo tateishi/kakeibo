@@ -5,3 +5,4 @@ from .adjust_tadatoshi import render as render_tadatoshi
 from .time_series import render as render_time_series
 from .monex_jpy import render as render_monex_jpy
 from .wallet_balance import render as render_balance
+from .prepaid_balance import render as render_prepaid

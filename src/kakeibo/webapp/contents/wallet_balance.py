@@ -64,7 +64,7 @@ def render(title: str, ctx):
     if not (st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}):
         return
 
-    if st.button("リロード"):
+    if st.button("リロード", key="wallet_balance_button"):
         st.rerun()
 
     cols = st.columns(2)
