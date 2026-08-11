@@ -75,6 +75,7 @@ def render(title: str, ctx):
         ("手元現金", "genkin.data", "資産:現金:手元現金"),
         ("小銭", "coins.data", "資産:現金:小銭ビン"),
         ("家計資金", "kakeishikin.data", "資産:現金:家計資金"),
+        ("旅行積立", "ryokou.data", "資産:現金:旅行積立"),
         ("小遣いストック", "kodukai.data", "資産:現金:こづかいストック"),
         ("へそくり", "hesokuri.data", "資産:現金:へそくり"),
         ("プレミアム現金", "premium_exchange.data", "資産:現金:プレミアム現金"),
