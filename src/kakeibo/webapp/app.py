@@ -23,6 +23,12 @@ def app():
     title = "Hello World!"
     st.set_page_config(layout="wide", page_title=title)
 
+    try:
+        services.load_journals()
+    except subprocess.CalledProcessError as e:
+        st.text(f"return code={e.returncode}, message={e.stderr}")
+        return
+
     tabdefs = [
         Tabdef(title="全体", render_func=contents.render_all),
         Tabdef(
