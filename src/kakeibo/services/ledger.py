@@ -51,3 +51,9 @@ def read(file: Path | str) -> pd.DataFrame:
 def account_list(df: pd.DataFrame) -> list[str]:
     account = df["account"].dropna().drop_duplicates().sort_values().to_list()
     return account
+
+def ledger_balance(df: pd.DataFrame, account: str) -> int:
+    today = pd.Timestamp.today().normalize()
+    df = df[df["account"] == account]
+    df = df[df["date"] <= today]
+    return df["amount"].sum()

@@ -1,28 +1,20 @@
 import pandas as pd
 import streamlit as st
+from kakeibo.webapp import components
+
 
 def balance(df: pd.DataFrame, name: str, account: str):
     today = pd.Timestamp.today().normalize()
 
-    df = df[df["account"]==account]
-    df = df[df["date"]<=today]
+    df = df[df["account"] == account]
+    df = df[df["date"] <= today]
     bal = df["amount"].sum()
 
-    st.markdown(
-        f"""
-<div style="
-    background-color:#222222;
-    border-radius:12px;
-    padding:20px;
-    margin: 5px 0px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-">
-    <h3 style="margin:0;">{name}</h3>
-    <p style="font-size:1.4rem; font-weight:600;">現金 残高 {bal:,} 円</p>
-</div>
-""",
-            unsafe_allow_html=True,
+    components.card(
+        title=name,
+        contents=f"現金 残高 {bal:,} 円",
     )
+
 
 def render(title: str, ctx):
     st.header(title)

@@ -39,3 +39,11 @@ def last_amount(df: pd.DataFrame, date: date | None = None) -> int:
     nearest = df_past.loc[(date - df_past["date"]).abs().idxmin()]
 
     return nearest["amount"]
+
+
+def wallet_balance(wallet: Path | str) -> int:
+    wallet_dir = Path("~/wks/ledger/ledger_kakei/wallet").expanduser()
+
+    wallet_file = wallet_dir / wallet
+    wallet_df = read_wallet(wallet_file)
+    return last_amount(wallet_df)

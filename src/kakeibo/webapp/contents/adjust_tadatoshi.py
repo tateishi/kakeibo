@@ -4,6 +4,7 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 from dateutil.relativedelta import relativedelta
+from kakeibo.webapp import components
 
 
 def filter_accounts(
@@ -59,36 +60,22 @@ def render(title: str, ctx):
     tadatoshi_direction = "忠利から家計" if tadatoshi_total < 0 else "家計から忠利"
 
     if abs(kakei_total) == abs(tadatoshi_total):
-        bg_color = "#004400"
+        bgcolor = "#004400"
     else:
-        bg_color = "#440000"
+        bgcolor = "#440000"
 
     with col_kakei:
-        st.markdown(f"""
-<div style="
-    background-color:{bg_color};
-    padding:20px;
-    border-radius:12px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-">
-    <h3 style="margin:0;">{kakei_direction}</h3>
-    <p style="font-size:1.4rem; font-weight:600;">補正金額 {abs(kakei_total):,} 円</p>
-</div>
-""", unsafe_allow_html=True)
-
+        components.card(
+            title=kakei_direction,
+            contents=f"補正金額 {abs(kakei_total):,} 円",
+            bgcolor=bgcolor,
+        )
         st.dataframe(kakei_df)
 
     with col_tadatoshi:
-        st.markdown(f"""
-<div style="
-    background-color:{bg_color};
-    padding:20px;
-    border-radius:12px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-">
-    <h3 style="margin:0;">{tadatoshi_direction}</h3>
-    <p style="font-size:1.4rem; font-weight:600;">補正金額 {abs(tadatoshi_total):,} 円</p>
-</div>
-""", unsafe_allow_html=True)
-
+        components.card(
+            title=tadatoshi_direction,
+            contents=f"補正金額 {abs(tadatoshi_total):,} 円",
+            bgcolor=bgcolor,
+        )
         st.dataframe(tadatoshi_df)

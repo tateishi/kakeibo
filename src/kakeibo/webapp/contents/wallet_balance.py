@@ -3,59 +3,30 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 from kakeibo import services
+from kakeibo.webapp import components
 
-
-def wallet_balance(wallet: Path | str) -> int:
-    wallet_dir = Path("~/wks/ledger/ledger_kakei/wallet").expanduser()
-
-    wallet_file = wallet_dir / wallet
-    wallet_df = services.read_wallet(wallet_file)
-    return services.last_amount(wallet_df)
-
-def ledger_balance(df: pd.DataFrame, account: str) -> int:
-    today = pd.Timestamp.today().normalize()
-    df = df[df["account"] == account]
-    df = df[df["date"] <= today]
-    return df["amount"].sum()
-
-def card(title: str, contents: str, bgcolor: str):
-    st.markdown(
-        f"""
-<div style="
-    background-color:{bgcolor};
-    border-radius:12px;
-    padding:20px;
-    margin: 5px 0px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-">
-    <h3 style="margin:0;">{title}</h3>
-    <p style="font-size:1.4rem; font-weight:600;">{contents}</p>
-</div>
-""",
-        unsafe_allow_html==True,
-    )
 
 def balance(df: pd.DataFrame, name: str, wallet: Path | str, account: str, columns):
-    w_balance = wallet_balance(wallet)
-    l_balance = ledger_balance(df, account)
+    w_balance = services.wallet_balance(wallet)
+    l_balance = services.ledger_balance(df, account)
 
     if w_balance == l_balance:
-        bg_color = "#004400"
+        bgcolor = "#004400"
     else:
-        bg_color = "#440000"
+        bgcolor = "#440000"
 
     with columns[0]:
-        card(
+        components.card(
             title=name,
             contents=f"現金 残高 {w_balance:,} 円",
-            bgcolor=bg_color
+            bgcolor=bgcolor
         )
 
     with columns[1]:
-        card(
+        components.card(
             title=name,
             contents=f"家計簿 残高 {l_balance:,} 円",
-            bgcolor=bg_color
+            bgcolor=bgcolor
         )
 
 
