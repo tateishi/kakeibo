@@ -43,6 +43,7 @@ def app():
         Tabdef(title="マネックス円残高", render_func=contents.render_monex_jpy),
         Tabdef(title="残高確認", render_func=contents.render_balance),
         Tabdef(title="プリペイド残高確認", render_func=contents.render_prepaid),
+        Tabdef(title="チェックリスト", render_func=contents.render_check_list),
     ]
 
     tabs = st.tabs([t.title for t in tabdefs])
