@@ -18,11 +18,12 @@ def render(title: str, ctx):
     df = df[df["account"].isin(accounts)]
     df["total"] = df["amount"].cumsum()
 
-    today = pd.Timestamp.today().normalize()
-    total = df.loc[df["date"] <= today, "amount"].sum()
+    dt = st.date_input("日付", key="monex_date")
+    dt = pd.Timestamp(dt)
+    total = df.loc[df["date"] <= dt, "amount"].sum()
 
     components.card(
-        title="📊 今日までの集計",
+        title=f"📊 {dt:%Y年%m月%d日}までの集計",
         contents=f"マネックス証券 円残高 {total:,} 円",
     )
 
