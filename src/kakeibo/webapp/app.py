@@ -30,6 +30,10 @@ def app():
         return
 
     tabdefs = [
+        Tabdef(title="チェックリスト", render_func=contents.render_check_list),
+        Tabdef(title="マネックス円残高", render_func=contents.render_monex_jpy),
+        Tabdef(title="プリペイド残高確認", render_func=contents.render_prepaid),
+        Tabdef(title="残高確認", render_func=contents.render_balance),
         Tabdef(title="全体", render_func=contents.render_all),
         Tabdef(
             title="科目ごと",
@@ -40,10 +44,6 @@ def app():
         Tabdef(title="科目と月の選択", render_func=contents.render_account_paymonth),
         Tabdef(title="忠利との補正", render_func=contents.render_tadatoshi),
         Tabdef(title="時系列", render_func=contents.render_time_series),
-        Tabdef(title="マネックス円残高", render_func=contents.render_monex_jpy),
-        Tabdef(title="残高確認", render_func=contents.render_balance),
-        Tabdef(title="プリペイド残高確認", render_func=contents.render_prepaid),
-        Tabdef(title="チェックリスト", render_func=contents.render_check_list),
     ]
 
     tabs = st.tabs([t.title for t in tabdefs])
