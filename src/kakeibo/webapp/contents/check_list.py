@@ -72,6 +72,43 @@ def render_trans(columns):
             render_trans_month(date.today() + relativedelta(months=n))
 
 
+def render_credit_card_month(df: pd.DataFrame, name: str, account: str, pay_month: date):
+    df = services.filter_accounts(
+        df,
+        [account],
+        pay_month
+    )
+
+    first_day = pd.Timestamp(pay_month.replace(day=1))
+
+    df_used = df[df["date"] < first_day]
+    used = -df_used["amount"].sum()
+
+    df_paid = df[df["date"] >= first_day]
+    paid = df_paid["amount"].sum()
+
+    bgcolor = "#004400" if used == paid else "#440000"
+
+    components.card(
+        title=f"{name}<br>{pay_month:%Y年%m月}",
+        contents=f"利用額={used:,}円<br>決済額={paid:,}円",
+        bgcolor=bgcolor
+    )
+
+
+def render_credit_card(df: pd.DataFrame, name: str, account: str, columns):
+    ncols = len(columns)
+
+    for i, n in enumerate(range(-2, 3)):
+        with columns[i % ncols]:
+            render_credit_card_month(
+                df,
+                name,
+                account,
+                date.today() + relativedelta(months=n)
+            )
+
+
 def render(title: str, ctx):
     st.header(title)
 
@@ -106,3 +143,41 @@ def render(title: str, ctx):
 
     cols = st.columns(ncols)
     render_trans(cols)
+
+    cols = st.columns(ncols)
+    render_credit_card(
+        st.session_state.kakei_df,
+        "ドコモカード",
+        "負債:クレジット:ドコモカード6601",
+        cols
+    )
+    render_credit_card(
+        st.session_state.kakei_df,
+        "アマゾン",
+        "負債:クレジット:アマゾンカード",
+        cols
+    )
+    render_credit_card(
+        st.session_state.kakei_df,
+        "楽天カード",
+        "負債:クレジット:楽天カード",
+        cols
+    )
+    render_credit_card(
+        st.session_state.kakei_df,
+        "シネマ",
+        "負債:クレジット:シネマイレージ",
+        cols
+    )
+    render_credit_card(
+        st.session_state.tadatoshi_df,
+        "オリーブカード",
+        "負債:クレジット:オリーブカード",
+        cols
+    )
+    render_credit_card(
+        st.session_state.tadatoshi_df,
+        "エクスプレス",
+        "負債:クレジット:エクスプレスカード",
+        cols
+    )

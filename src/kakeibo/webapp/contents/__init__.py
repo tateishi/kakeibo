@@ -7,3 +7,4 @@ from .monex_jpy import render as render_monex_jpy
 from .prepaid_balance import render as render_prepaid
 from .time_series import render as render_time_series
 from .wallet_balance import render as render_balance
+from .tatekae import render as render_tatekae

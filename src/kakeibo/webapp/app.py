@@ -33,6 +33,7 @@ def app():
         Tabdef(title="チェックリスト", render_func=contents.render_check_list),
         Tabdef(title="マネックス円残高", render_func=contents.render_monex_jpy),
         Tabdef(title="プリペイド残高確認", render_func=contents.render_prepaid),
+        Tabdef(title="立替・未払確認", render_func=contents.render_tatekae),
         Tabdef(title="残高確認", render_func=contents.render_balance),
         Tabdef(title="全体", render_func=contents.render_all),
         Tabdef(
