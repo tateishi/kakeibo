@@ -45,30 +45,20 @@ def render(title: str, ctx):
     ncols = 5
     cols = st.columns(ncols)
     today = date.today()
-    for i, n in enumerate(range(-2, 3)):
-        pay_month = today + relativedelta(months=n)
-        with cols[i % 5]:
-            _render_tatekae(
-                st.session_state.kakei_df,
-                "立替忠利",
-                "資産:立替金:立石忠利",
-                pay_month
-            )
-            _render_tatekae(
-                st.session_state.kakei_df,
-                "未払忠利",
-                "負債:未払金:立石忠利",
-                pay_month
-            )
-            _render_tatekae(
-                st.session_state.tadatoshi_df,
-                "立替家計",
-                "資産:立替金:家計",
-                pay_month
-            )
-            _render_tatekae(
-                st.session_state.tadatoshi_df,
-                "未払家計",
-                "負債:未払金:家計:忠利",
-                pay_month
-            )
+    params = [
+        (st.session_state.kakei_df, "立替忠利", "資産:立替金:立石忠利"),
+        (st.session_state.kakei_df, "未払忠利", "負債:未払金:立石忠利"),
+        (st.session_state.tadatoshi_df, "立替家計", "資産:立替金:家計"),
+        (st.session_state.tadatoshi_df, "未払家計", "負債:未払金:家計:忠利"),
+    ]
+
+    for df, title, account in params:
+        for i, n in enumerate(range(-2, 3)):
+            pay_month = today + relativedelta(months=n)
+            with cols[i % 5]:
+                _render_tatekae(
+                    df,
+                    title,
+                    account,
+                    pay_month,
+                )
