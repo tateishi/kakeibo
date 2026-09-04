@@ -35,3 +35,12 @@ def render(title: str, ctx):
     df = st.session_state.kakei_df
     for name, account in kakei_param:
         balance(df, name, account)
+
+    tadatoshi_param: list[tuple[str, str]] = [
+        ("Paypay", "資産:現金:Paypay"),
+        ("名古屋プレミアム商品券", "資産:現金:プレミアム商品券"),
+    ]
+
+    df = st.session_state.tadatoshi_df
+    for name, account in tadatoshi_param:
+        balance(df, name, account)
