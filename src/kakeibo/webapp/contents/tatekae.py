@@ -42,17 +42,34 @@ def render(title: str, ctx):
     if st.button("リロード", key="tatekae_button"):
         st.rerun()
 
-    ncols = 5
-    cols = st.columns(ncols)
     today = date.today()
-    params = [
+    params_kakei = [
         (st.session_state.kakei_df, "立替忠利", "資産:立替金:立石忠利"),
         (st.session_state.kakei_df, "未払忠利", "負債:未払金:立石忠利"),
+    ]
+    params_tadatoshi = [
         (st.session_state.tadatoshi_df, "立替家計", "資産:立替金:家計"),
         (st.session_state.tadatoshi_df, "未払家計", "負債:未払金:家計:忠利"),
     ]
 
-    for df, title, account in params:
+    ncols = 5
+
+    st.subheader("家計から忠利")
+    cols = st.columns(ncols)
+    for df, title, account in params_kakei:
+        for i, n in enumerate(range(-2, 3)):
+            pay_month = today + relativedelta(months=n)
+            with cols[i % 5]:
+                _render_tatekae(
+                    df,
+                    title,
+                    account,
+                    pay_month,
+                )
+
+    st.subheader("忠利から家計")
+    cols = st.columns(ncols)
+    for df, title, account in params_tadatoshi:
         for i, n in enumerate(range(-2, 3)):
             pay_month = today + relativedelta(months=n)
             with cols[i % 5]:
