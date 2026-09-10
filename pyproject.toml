@@ -20,4 +20,3 @@ dev = [
 
 [project.scripts]
 kakeibo="kakeibo.cli:app"
-kakeibo-web="kakeibo.web:app"

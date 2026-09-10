@@ -1,9 +1,15 @@
 import subprocess
 import sys
+from importlib.resources import files
 from pathlib import Path
 
-def app():
-    webapp = Path(__file__).parent / "webapp/app.py"
+import typer
+
+web_app = typer.Typer()
+
+@web_app.command()
+def web():
+    webapp = files("kakeibo.webapp").joinpath("app.py")
 
     subprocess.run([
         sys.executable,
@@ -12,6 +18,3 @@ def app():
         "run",
         str(webapp),
     ])
-
-if __name__ == "__main__":
-    app()

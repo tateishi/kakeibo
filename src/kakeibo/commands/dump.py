@@ -6,9 +6,9 @@ from kakeibo import services
 
 import typer
 
-app = typer.Typer()
+dump_app = typer.Typer()
 
-@app.command()
+@dump_app.command()
 def dump():
     try:
         file = Path("~/wks/ledger/ledger_kakei/journal/kakei/main.ledger")
