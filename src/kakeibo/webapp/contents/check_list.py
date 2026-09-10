@@ -131,6 +131,7 @@ def render(title: str, ctx):
         ("家計資金", "kakeishikin.data", "資産:現金:家計資金"),
         ("旅行積立", "ryokou.data", "資産:現金:旅行積立"),
         ("小遣いストック", "kodukai.data", "資産:現金:こづかいストック"),
+        ("実家現金", "jikka.data", "資産:現金:実家現金"),
     ]
     render_balance(st.session_state.kakei_df, check_list_kakei,  cols)
 

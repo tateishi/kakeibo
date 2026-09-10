@@ -30,6 +30,7 @@ def render(title: str, ctx):
         ("Lu Vit", "資産:現金:LuVit"),
         ("さくらカード", "資産:現金:さくらカード"),
         ("コストコカード", "資産:現金:コストコカード"),
+        ("名古屋プレミアム商品券 歩", "資産:現金:プレミアム商品券"),
     ]
 
     df = st.session_state.kakei_df
@@ -38,7 +39,7 @@ def render(title: str, ctx):
 
     tadatoshi_param: list[tuple[str, str]] = [
         ("Paypay", "資産:現金:Paypay"),
-        ("名古屋プレミアム商品券", "資産:現金:プレミアム商品券"),
+        ("名古屋プレミアム商品券 忠利", "資産:現金:プレミアム商品券"),
     ]
 
     df = st.session_state.tadatoshi_df
