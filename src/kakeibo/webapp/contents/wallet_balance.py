@@ -5,6 +5,8 @@ import streamlit as st
 from kakeibo import services
 from kakeibo.webapp import components
 
+__all__ = ["render_balance"]
+
 
 def balance(df: pd.DataFrame, name: str, wallet: Path | str, account: str, columns):
     w_balance = services.wallet_balance(wallet)
@@ -17,20 +19,16 @@ def balance(df: pd.DataFrame, name: str, wallet: Path | str, account: str, colum
 
     with columns[0]:
         components.card(
-            title=name,
-            contents=f"現金 残高 {w_balance:,} 円",
-            bgcolor=bgcolor
+            title=name, contents=f"現金 残高 {w_balance:,} 円", bgcolor=bgcolor
         )
 
     with columns[1]:
         components.card(
-            title=name,
-            contents=f"家計簿 残高 {l_balance:,} 円",
-            bgcolor=bgcolor
+            title=name, contents=f"家計簿 残高 {l_balance:,} 円", bgcolor=bgcolor
         )
 
 
-def render(title: str, ctx):
+def render_balance(title: str):
     st.header(title)
 
     if not (st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}):
@@ -56,7 +54,6 @@ def render(title: str, ctx):
     df = st.session_state.kakei_df
     for name, file, account in kakei_param:
         balance(df, name, file, account, cols)
-
 
     tadatoshi_param: list[tuple[str, str, str]] = [
         ("忠利財布", "tadatoshi.data", "資産:現金:財布"),

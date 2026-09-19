@@ -2,9 +2,11 @@ from datetime import date
 
 import pandas as pd
 import streamlit as st
+from dateutil.relativedelta import relativedelta
 from kakeibo import services
 from kakeibo.webapp import components
-from dateutil.relativedelta import relativedelta
+
+__all__ = ["render_check_list"]
 
 
 def check(df: pd.DataFrame, name: str, wallet: str, account: str):
@@ -18,7 +20,7 @@ def check(df: pd.DataFrame, name: str, wallet: str, account: str):
         contents=f"""
         財布: {w_balance:,}円<br>
         残高: {l_balance:,}円""",
-        bgcolor=bgcolor
+        bgcolor=bgcolor,
     )
 
 
@@ -60,7 +62,7 @@ def render_trans_month(pay_month: date):
         {kakei_direction}: {abs(kakei_total):,}円<br>
         {tadatoshi_direction}: {abs(tadatoshi_total):,}円
         """,
-        bgcolor=bgcolor
+        bgcolor=bgcolor,
     )
 
 
@@ -72,12 +74,10 @@ def render_trans(columns):
             render_trans_month(date.today() + relativedelta(months=n))
 
 
-def render_credit_card_month(df: pd.DataFrame, name: str, account: str, pay_month: date):
-    df = services.filter_accounts(
-        df,
-        [account],
-        pay_month
-    )
+def render_credit_card_month(
+    df: pd.DataFrame, name: str, account: str, pay_month: date
+):
+    df = services.filter_accounts(df, [account], pay_month)
 
     first_day = pd.Timestamp(pay_month.replace(day=1))
 
@@ -92,7 +92,7 @@ def render_credit_card_month(df: pd.DataFrame, name: str, account: str, pay_mont
     components.card(
         title=f"{name}<br>{pay_month:%Y年%m月}",
         contents=f"利用額={used:,}円<br>決済額={paid:,}円",
-        bgcolor=bgcolor
+        bgcolor=bgcolor,
     )
 
 
@@ -102,14 +102,11 @@ def render_credit_card(df: pd.DataFrame, name: str, account: str, columns):
     for i, n in enumerate(range(-2, 3)):
         with columns[i % ncols]:
             render_credit_card_month(
-                df,
-                name,
-                account,
-                date.today() + relativedelta(months=n)
+                df, name, account, date.today() + relativedelta(months=n)
             )
 
 
-def render(title: str, ctx):
+def render_check_list(title: str):
     st.header(title)
 
     if not (st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}):
@@ -133,14 +130,14 @@ def render(title: str, ctx):
         ("小遣いストック", "kodukai.data", "資産:現金:こづかいストック"),
         ("実家現金", "jikka.data", "資産:現金:実家現金"),
     ]
-    render_balance(st.session_state.kakei_df, check_list_kakei,  cols)
+    render_balance(st.session_state.kakei_df, check_list_kakei, cols)
 
     cols = st.columns(ncols)
     check_list_tadatoshi: list[tuple[str, str, str]] = [
         ("忠利財布", "tadatoshi.data", "資産:現金:財布"),
         ("忠利小遣い", "tadatoshi_kodukai.data", "資産:現金:忠利小遣現金"),
     ]
-    render_balance(st.session_state.tadatoshi_df, check_list_tadatoshi,  cols)
+    render_balance(st.session_state.tadatoshi_df, check_list_tadatoshi, cols)
 
     cols = st.columns(ncols)
     render_trans(cols)
@@ -150,35 +147,26 @@ def render(title: str, ctx):
         st.session_state.kakei_df,
         "ドコモカード",
         "負債:クレジット:ドコモカード6601",
-        cols
+        cols,
     )
     render_credit_card(
-        st.session_state.kakei_df,
-        "アマゾン",
-        "負債:クレジット:アマゾンカード",
-        cols
+        st.session_state.kakei_df, "アマゾン", "負債:クレジット:アマゾンカード", cols
     )
     render_credit_card(
-        st.session_state.kakei_df,
-        "楽天カード",
-        "負債:クレジット:楽天カード",
-        cols
+        st.session_state.kakei_df, "楽天カード", "負債:クレジット:楽天カード", cols
     )
     render_credit_card(
-        st.session_state.kakei_df,
-        "シネマ",
-        "負債:クレジット:シネマイレージ",
-        cols
+        st.session_state.kakei_df, "シネマ", "負債:クレジット:シネマイレージ", cols
     )
     render_credit_card(
         st.session_state.tadatoshi_df,
         "オリーブカード",
         "負債:クレジット:オリーブカード",
-        cols
+        cols,
     )
     render_credit_card(
         st.session_state.tadatoshi_df,
         "エクスプレス",
         "負債:クレジット:エクスプレスカード",
-        cols
+        cols,
     )

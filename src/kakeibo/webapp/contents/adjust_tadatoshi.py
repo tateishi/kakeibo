@@ -8,7 +8,7 @@ from kakeibo.webapp import components
 from kakeibo import services
 
 
-def render(title: str, ctx):
+def render_tadatoshi(title: str):
     st.header(title)
 
     if not (st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}):

@@ -5,7 +5,7 @@ import streamlit as st
 from kakeibo.webapp import services
 
 
-def render(title: str, _):
+def render_all(title: str):
     st.header(title)
     if st.button("読み込み"):
         try:

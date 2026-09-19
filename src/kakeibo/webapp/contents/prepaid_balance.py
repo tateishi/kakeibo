@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 from kakeibo.webapp import components
 
+__all__ = ["render_prepaid"]
+
 
 def balance(df: pd.DataFrame, name: str, account: str):
     today = pd.Timestamp.today().normalize()
@@ -16,7 +18,7 @@ def balance(df: pd.DataFrame, name: str, account: str):
     )
 
 
-def render(title: str, ctx):
+def render_prepaid(title: str):
     st.header(title)
 
     if not (st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}):

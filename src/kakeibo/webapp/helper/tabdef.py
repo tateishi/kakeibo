@@ -1,4 +1,8 @@
 from dataclasses import dataclass
+from typing import Callable
+
+import streamlit as st
+
 
 @dataclass
 class Tabdef:

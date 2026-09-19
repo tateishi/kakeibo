@@ -6,7 +6,7 @@ options = {
     "忠利": "tadatoshi",
 }
 
-def render(title: str, ctx):
+def render_by_account(title: str, ctx: dict):
     st.header(title)
 
     if "journal" not in st.session_state:
@@ -36,7 +36,7 @@ def render(title: str, ctx):
     st.dataframe(df)
 
 
-def render_account(title: str, _):
+def render_account(title: str):
     st.header(title)
     if "journal" not in st.session_state:
         st.session_state.journal = "kakei"
@@ -79,7 +79,7 @@ def render_account(title: str, _):
     st.dataframe(df)
 
 
-def render_account_paymonth(title: str, _):
+def render_account_paymonth(title: str):
     st.header(title)
     if "journal" not in st.session_state:
         st.session_state.journal = "kakei"

@@ -8,7 +8,7 @@ options = {
     "忠利": "tadatoshi",
 }
 
-def render(title: str, ctx):
+def render_time_series(title: str):
     st.header(title)
 
     col1, col2, col3 = st.columns(3)

@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from kakeibo import services
 from kakeibo.webapp import components
 
+__all__ = ["render_tatekae"]
 
 def _balance(df: pd.DataFrame, accounts: list[str], pay_month: date) -> tuple[int, int]:
     previous_month = pd.Timestamp(pay_month.replace(day=1) + relativedelta(days=-1))
@@ -33,7 +34,7 @@ def _render_tatekae(df:pd.DataFrame, title: str, account: str, pay_month: date):
     )
 
 
-def render(title: str, ctx):
+def render_tatekae(title: str):
     st.header(title)
 
     if not st.session_state.keys() >= {"kakei_df", "tadatoshi_df"}:

@@ -3,7 +3,7 @@ import streamlit as st
 
 from kakeibo.webapp import components
 
-def render(title: str, ctx):
+def render_monex_jpy(title: str):
     st.header(title)
 
     if not "kakei_df" in st.session_state:
