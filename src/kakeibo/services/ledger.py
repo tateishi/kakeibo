@@ -29,8 +29,33 @@ def format_csv(file: Path | str, format: str) -> str:
 
 
 def read(file: Path | str) -> pd.DataFrame:
-    format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(meta('pay_month')),%(meta('shop')),%(meta('school')),%(meta('label')),%(filename),%(beg_line)\n"
-    names = "date payee account amount commodity pay_month shop school label filename lineno".split()
+    format = (
+        "%(date),"
+        "%(payee),"
+        "%(account),"
+        "%(quantity(amount)),"
+        "%(commodity),"
+        "%(meta('pay_month')),"
+        "%(meta('shop')),"
+        "%(meta('school')),"
+        "%(meta('label')),"
+        "%(filename),"
+        "%(beg_line)"
+        "\n"
+    )
+    names = [
+        "date",
+        "payee",
+        "account",
+        "amount",
+        "commodity",
+        "pay_month",
+        "shop",
+        "school",
+        "label",
+        "filename",
+        "lineno",
+    ]
 
     text = format_csv(file, format)
     stream = io.StringIO(text)
