@@ -3,6 +3,7 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 from dateutil.relativedelta import relativedelta
+
 from kakeibo import services
 from kakeibo.webapp import components
 

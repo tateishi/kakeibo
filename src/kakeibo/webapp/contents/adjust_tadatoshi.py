@@ -1,11 +1,7 @@
-import decimal
-from datetime import date
-
-import pandas as pd
 import streamlit as st
-from dateutil.relativedelta import relativedelta
-from kakeibo.webapp import components
+
 from kakeibo import services
+from kakeibo.webapp import components
 
 
 def render_tadatoshi(title: str):

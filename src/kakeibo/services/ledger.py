@@ -61,6 +61,7 @@ def ledger_balance(df: pd.DataFrame, account: str) -> int:
     df = df[df["date"] <= today]
     return df["amount"].sum()
 
+
 def filter_accounts(
     df: pd.DataFrame, accounts: list[str], pay_month: date
 ) -> pd.DataFrame:

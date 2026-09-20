@@ -1,12 +1,11 @@
-import streamlit as st
-import pandas as pd
 import plotly.express as px
-
+import streamlit as st
 
 options = {
     "家計": "kakei",
     "忠利": "tadatoshi",
 }
+
 
 def render_time_series(title: str):
     st.header(title)
@@ -41,10 +40,7 @@ def render_time_series(title: str):
         keyword = st.text_input("キーワード検索", key="text_time_series")
         if keyword:
             accounts = [
-                acc
-                for acc
-                in account
-                if all((k in acc) for k in keyword.split())
+                acc for acc in account if all((k in acc) for k in keyword.split())
             ]
         else:
             accounts = account
@@ -52,27 +48,24 @@ def render_time_series(title: str):
     with col3:
         selected = st.selectbox("科目", accounts, key="selectbox_time_series")
 
-    df = df[df["account"]==selected]
+    df = df[df["account"] == selected]
     df = df["date amount commodity".split()]
-    df = df.groupby("date").agg({
-        "amount": "sum",
-        "commodity": "first",
-    })
+    df = df.groupby("date").agg(
+        {
+            "amount": "sum",
+            "commodity": "first",
+        }
+    )
     df["total"] = df["amount"].cumsum()
 
-    #df = df.drop_duplicates(subset="date", keep="last")
+    # df = df.drop_duplicates(subset="date", keep="last")
 
-    #df = df.set_index("date")
+    # df = df.set_index("date")
     df = df.resample("1D").ffill()
 
     # st.line_chart(df["total"])
 
-    fig = px.line(
-        df,
-        x=df.index,
-        y="total",
-        title="残高"
-    )
+    fig = px.line(df, x=df.index, y="total", title="残高")
     st.plotly_chart(fig, width="stretch")
 
     st.dataframe(df)

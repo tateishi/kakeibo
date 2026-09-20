@@ -1,4 +1,4 @@
-from kakeibo.webapp import helper, contents
+from kakeibo.webapp import contents, helper
 
 tabdefs = [
     helper.Tabdef(title="チェックリスト", render_func=contents.render_check_list),

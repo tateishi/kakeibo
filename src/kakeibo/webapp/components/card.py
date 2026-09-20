@@ -1,6 +1,7 @@
 import streamlit as st
 
-def card(title: str, contents: str, bgcolor: str="#222222"):
+
+def card(title: str, contents: str, bgcolor: str = "#222222"):
     st.markdown(
         f"""
 <div style="

@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+
 from kakeibo.webapp import components
 
 __all__ = ["render_prepaid"]

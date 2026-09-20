@@ -1,10 +1,10 @@
 import streamlit as st
-import pandas as pd
 
 options = {
     "家計": "kakei",
     "忠利": "tadatoshi",
 }
+
 
 def render_by_account(title: str, ctx: dict):
     st.header(title)
@@ -32,7 +32,7 @@ def render_by_account(title: str, ctx: dict):
 
     acc = account[0]
     st.write(acc)
-    df = df[df["account"]==acc]
+    df = df[df["account"] == acc]
     st.dataframe(df)
 
 
@@ -63,10 +63,9 @@ def render_account(title: str):
     with col1:
         keyword = st.text_input("キーワード検索")
         if keyword:
-            accounts = [acc
-                        for acc
-                        in account
-                        if all(k in acc for k in keyword.split())]
+            accounts = [
+                acc for acc in account if all(k in acc for k in keyword.split())
+            ]
         else:
             accounts = account
 
@@ -74,7 +73,7 @@ def render_account(title: str):
         selected = st.selectbox("科目", accounts)
 
     df = df["date payee account amount commodity pay_month shop school label".split()]
-    df = df[df["account"]==selected]
+    df = df[df["account"] == selected]
     df["total"] = df["amount"].cumsum()
     st.dataframe(df)
 
@@ -106,10 +105,9 @@ def render_account_paymonth(title: str):
     with col1:
         keyword = st.text_input("キーワード検索", key="keyword")
         if keyword:
-            accounts = [acc
-                        for acc
-                        in account
-                        if all(k in acc for k in keyword.split())]
+            accounts = [
+                acc for acc in account if all(k in acc for k in keyword.split())
+            ]
         else:
             accounts = account
 
@@ -120,8 +118,8 @@ def render_account_paymonth(title: str):
     month = month.strftime("%Y-%m")
 
     df = df["date payee account amount commodity pay_month shop school label".split()]
-    df = df[df["account"]==selected]
-    df = df[df["pay_month"]==month]
+    df = df[df["account"] == selected]
+    df = df[df["pay_month"] == month]
 
     df["total"] = df["amount"].cumsum()
     st.dataframe(df)

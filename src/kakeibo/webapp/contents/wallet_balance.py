@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+
 from kakeibo import services
 from kakeibo.webapp import components
 

@@ -3,10 +3,12 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 from dateutil.relativedelta import relativedelta
+
 from kakeibo import services
 from kakeibo.webapp import components
 
 __all__ = ["render_tatekae"]
+
 
 def _balance(df: pd.DataFrame, accounts: list[str], pay_month: date) -> tuple[int, int]:
     previous_month = pd.Timestamp(pay_month.replace(day=1) + relativedelta(days=-1))
@@ -19,7 +21,7 @@ def _balance(df: pd.DataFrame, accounts: list[str], pay_month: date) -> tuple[in
     return used_total, paid_total
 
 
-def _render_tatekae(df:pd.DataFrame, title: str, account: str, pay_month: date):
+def _render_tatekae(df: pd.DataFrame, title: str, account: str, pay_month: date):
     used, paid = _balance(
         df,
         [account],
