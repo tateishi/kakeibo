@@ -29,11 +29,6 @@ def format_csv(file: Path | str, format: str) -> str:
 
 
 def read(file: Path | str) -> pd.DataFrame:
-    # file = Path("~/wks/ledger/ledger_kakei/journal/kakei/main.ledger")
-    # file = Path("~/wks/ledger/ledger_kakei/journal/tadatoshi/cash/wallet.ledger")
-    # file = Path("~/wks/ledger/ledger_kakei/journal/kakei/bank/sonybank/sonybank.ledger")
-
-    # format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(filename),%(beg_line)\n"
     format = "%(date),%(payee),%(account),%(quantity(amount)),%(commodity),%(meta('pay_month')),%(meta('shop')),%(meta('school')),%(meta('label')),%(filename),%(beg_line)\n"
     names = "date payee account amount commodity pay_month shop school label filename lineno".split()
 

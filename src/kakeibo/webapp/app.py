@@ -1,3 +1,5 @@
+import subprocess
+
 import streamlit as st
 
 from kakeibo.webapp import helper, services
