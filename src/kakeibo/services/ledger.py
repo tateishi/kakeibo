@@ -28,34 +28,34 @@ def format_csv(file: Path | str, format: str) -> str:
         raise e
 
 
+SCHEME = [
+    ("date", "%(date)"),
+    ("payee", "%(payee)"),
+    ("account", "%(account)"),
+    ("amount", "%(quantity(amount))"),
+    ("commodity", "%(commodity)"),
+    ("pay_month", "%(meta('pay_month'))"),
+    ("shop", "%(meta('shop'))"),
+    ("school", "%(meta('school'))"),
+    ("label", "%(meta('label'))"),
+    ("filename", "%(filename)"),
+    ("lineno", "%(beg_line)"),
+]
+
+
+def build_format(scheme: list[tuple[str, str]]) -> str:
+    format = ",".join([item[1] for item in scheme]) + "\n"
+    return format
+
+
+def build_names(scheme: list[tuple[str, str]]) -> list[str]:
+    names = [item[0] for item in scheme]
+    return names
+
+
 def read(file: Path | str) -> pd.DataFrame:
-    format = (
-        "%(date),"
-        "%(payee),"
-        "%(account),"
-        "%(quantity(amount)),"
-        "%(commodity),"
-        "%(meta('pay_month')),"
-        "%(meta('shop')),"
-        "%(meta('school')),"
-        "%(meta('label')),"
-        "%(filename),"
-        "%(beg_line)"
-        "\n"
-    )
-    names = [
-        "date",
-        "payee",
-        "account",
-        "amount",
-        "commodity",
-        "pay_month",
-        "shop",
-        "school",
-        "label",
-        "filename",
-        "lineno",
-    ]
+    format = build_format(SCHEME)
+    names = build_names(SCHEME)
 
     text = format_csv(file, format)
     stream = io.StringIO(text)
