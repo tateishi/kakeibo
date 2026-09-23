@@ -20,6 +20,6 @@ class Tabdef:
 def render_tabs(tabdefs: list[Tabdef]):
     tabs = st.tabs([t.title for t in tabdefs])
 
-    for tab, tabdef in zip(tabs, tabdefs):
+    for tab, tabdef in zip(tabs, tabdefs, strict=True):
         with tab:
             tabdef.render()
